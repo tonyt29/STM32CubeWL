@@ -255,6 +255,58 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  // Infinite sending
+	  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, SUBGHZ_RADIO_WRITE_BUFFER, RadioTxData, 6) != HAL_OK)
+		{
+		  Error_Handler();
+		}
+	  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_TX, RadioCmd, 3) != HAL_OK)
+	    {
+	  	  // After the transmission is finished, the sub-GHZ radio enters automatically the Standby mode
+	  	  Error_Handler();
+	    }
+	  RadioResult = 0x00;
+	    if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
+	    {
+	      Error_Handler();
+	    }
+	    RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
+	    RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
+
+	    if (RadioMode == RADIO_MODE_TX)
+	      {
+	        /* Wait end of transfer. SUBGHZ Radio go in Standby Mode */
+	        do
+	        {
+	          RadioResult = 0x00;
+	          if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
+	          {
+	            Error_Handler();
+	          }
+
+	          RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
+	          RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
+	        }
+	        while (RadioMode != RADIO_MODE_STANDBY_RC);
+	      }
+	      else
+	      {
+	        Error_Handler();
+	      }
+	  IRQStatus = 0x00;
+		if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
+		{
+		  Error_Handler();
+		}
+		IRQStatus = RadioGetIRQ[1];
+
+		if (IRQStatus)
+		{
+		  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_CLR_IRQSTATUS, RadioClrIRQ, 2) != HAL_OK)
+		  {
+			  Error_Handler();
+		  }
+		}
 
     /* USER CODE BEGIN 3 */
   }
