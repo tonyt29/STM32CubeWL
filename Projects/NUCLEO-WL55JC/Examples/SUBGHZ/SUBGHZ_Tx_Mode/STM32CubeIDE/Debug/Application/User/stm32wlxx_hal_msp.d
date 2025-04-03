@@ -1,5 +1,5 @@
 Application/User/stm32wlxx_hal_msp.o: \
- C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/stm32wlxx_hal_msp.c \
+ C:/Users/campc/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/stm32wlxx_hal_msp.c \
  ../../Inc/main.h \
  ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_hal.h \
  ../../Inc/stm32wlxx_hal_conf.h \
