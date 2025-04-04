@@ -1,7 +1,7 @@
 C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:93:5:main	3
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:159:6:SystemClock_Config	3
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:201:13:MX_SUBGHZ_Init	2
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:230:6:Error_Handler	1
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:242:6:InitTx	20
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:320:6:InitRx	19
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:379:6:InfiniteTx	10
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:156:6:SystemClock_Config	3
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:198:13:MX_SUBGHZ_Init	2
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:227:6:Error_Handler	1
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:239:6:InitTx	20
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:317:6:InitRx	19
+C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/main.c:376:6:InfiniteTx	15

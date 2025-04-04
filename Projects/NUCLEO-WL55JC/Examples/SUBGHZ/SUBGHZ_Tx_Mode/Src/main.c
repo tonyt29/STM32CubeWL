@@ -58,9 +58,9 @@ uint8_t RadioFrequency[4] = {0x34, 0x03, 0x00, 0x9F};	// 915MHz
 uint8_t RadioPA[4] = {0x07, 0x00, 0x01, 0x01};
 uint8_t RadioTxPA[2] = {0x0E, 0x07};
 uint8_t LoRaMod[4] = {0x07, 0x04, 0x00, 0x01};	// Spreading factor 7, Bandwidth 125kHz
-uint8_t RadioConfigIRQ[8] = {0x00, 0x03, 0x00, 0x03, 0x00, 0x00, 0x00, 0x00};
+uint8_t RadioConfigIRQ[8] = {0x02, 0x03, 0x02, 0x03, 0x00, 0x00, 0x00, 0x00};
 uint8_t RadioGetIRQ[3] = {0x00, 0x00, 0x00};
-uint8_t RadioClrIRQ[2] = {0x00, 0x01};
+uint8_t RadioClrIRQ[2] = {0x01, 0x02};
 uint8_t RadioGetData[2] = {0x00, 0x00};
 
 uint8_t RadioCmd[3] = {0x00, 0x00, 0x00};
@@ -122,9 +122,7 @@ int main(void)
 
   /* Retrieve Status from SUBGHZ Radio */
   if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
-  {
     Error_Handler();
-  }
   else
   {
     /* Format Mode and Status receive from SUBGHZ Radio */
@@ -132,12 +130,10 @@ int main(void)
     
     /* Check if SUBGHZ Radio is in RADIO_MODE_STANDBY_RC mode */
     if(RadioMode != RADIO_MODE_STANDBY_RC)
-    {
       Error_Handler();
-    }
   }
 
-  InitRx();
+  InitTx();
 
   /* USER CODE END 2 */
 
@@ -146,6 +142,7 @@ int main(void)
   while (1)
   {
     /* USER CODE END WHILE */
+	  InfiniteTx();
 
     /* USER CODE BEGIN 3 */
   }
@@ -346,15 +343,15 @@ void InitRx(void)
 	//Step 8
 	if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_RX, RadioCmd, 3) != HAL_OK)
 		Error_Handler();
-	//Step 8.5
-	RadioResult = 0x00;
-	if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
-		Error_Handler();
-	RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
-	RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
-	//Step 9
 	do
 	{
+		//Step 8.5
+		RadioResult = 0x00;
+		if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
+			Error_Handler();
+		RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
+		RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
+		//Step 9
 		if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
 				Error_Handler();
 
@@ -381,15 +378,15 @@ void InfiniteTx(void)
   // Infinite sending
   if (HAL_SUBGHZ_WriteBuffer(&hsubghz, 0x80, RadioTxData, 5) != HAL_OK)
       Error_Handler();
+  if (HAL_SUBGHZ_ReadBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
+	  Error_Handler();
   if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_TX, RadioCmd, 3) != HAL_OK)
-	  // After the transmission is finished, the sub-GHZ radio enters automatically the Standby mode
+  // After the transmission is finished, the sub-GHZ radio enters automatically the Standby mode
 	  Error_Handler();
 
   RadioResult = 0x00;
 	if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
-	{
 	  Error_Handler();
-	}
 	RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
 	RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
 
@@ -400,33 +397,33 @@ void InfiniteTx(void)
 		{
 		  RadioResult = 0x00;
 		  if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
-		  {
 			Error_Handler();
-		  }
 
 		  RadioMode   = ((RadioResult & RADIO_MODE_BITFIELD) >> 4);
 		  RadioStatus = ((RadioResult & RADIO_STATUS_BITFIELD) >> 1);
 		}
 		while (RadioMode != RADIO_MODE_STANDBY_RC);
 	  }
-	  else
-	  {
+	  else if (RadioMode != RADIO_MODE_STANDBY_RC)
 		Error_Handler();
-	  }
+
   IRQStatus = 0x00;
 	if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
-	{
 	  Error_Handler();
-	}
 	IRQStatus = RadioGetIRQ[1];
 
 	if (IRQStatus)
-	{
 	  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_CLR_IRQSTATUS, RadioClrIRQ, 2) != HAL_OK)
-	  {
 		  Error_Handler();
-	  }
-	}
+	  memset(RadioGetIRQ, 0, sizeof(RadioGetIRQ));
+	  if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
+		  Error_Handler();
+
+	memset(RadioRxData, 0, sizeof(RadioRxData));
+	if (HAL_SUBGHZ_WriteBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
+	      Error_Handler();
+	if (HAL_SUBGHZ_ReadBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
+		  Error_Handler();
 }
 
 #ifdef  USE_FULL_ASSERT
