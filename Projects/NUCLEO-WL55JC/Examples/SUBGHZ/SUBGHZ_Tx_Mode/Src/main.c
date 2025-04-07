@@ -119,7 +119,16 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /*## 1 - Wakeup the SUBGHZ Radio ###########################################*/
+  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_SLEEP, &RadioParam, 1) != HAL_OK)
+  {
+	  Error_Handler();
+  }
 
+  /* Set Standby Mode */
+  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_STANDBY, &RadioParam, 1) != HAL_OK)
+  {
+	  Error_Handler();
+  }
   /* Retrieve Status from SUBGHZ Radio */
   if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
     Error_Handler();
@@ -381,7 +390,7 @@ void InfiniteTx(void)
   if (HAL_SUBGHZ_ReadBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
 	  Error_Handler();
   if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_TX, RadioCmd, 3) != HAL_OK)
-  // After the transmission is finished, the sub-GHZ radio enters automatically the Standby mode
+      // After the transmission is finished, the sub-GHZ radio enters automatically the Standby mode
 	  Error_Handler();
 
   RadioResult = 0x00;
@@ -415,15 +424,18 @@ void InfiniteTx(void)
 	if (IRQStatus)
 	  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_CLR_IRQSTATUS, RadioClrIRQ, 2) != HAL_OK)
 		  Error_Handler();
-	  memset(RadioGetIRQ, 0, sizeof(RadioGetIRQ));
-	  if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
+	memset(RadioGetIRQ, 0, sizeof(RadioGetIRQ));
+	if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_IRQSTATUS, RadioGetIRQ, 3) != HAL_OK)
 		  Error_Handler();
 
 	memset(RadioRxData, 0, sizeof(RadioRxData));
-	if (HAL_SUBGHZ_WriteBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
-	      Error_Handler();
 	if (HAL_SUBGHZ_ReadBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
 		  Error_Handler();
+//	memset(RadioRxData, 0, sizeof(RadioRxData));
+//	if (HAL_SUBGHZ_WriteBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
+//	      Error_Handler();
+//	if (HAL_SUBGHZ_ReadBuffer(&hsubghz, 0x80, RadioRxData, 5) != HAL_OK)
+//		  Error_Handler();
 }
 
 #ifdef  USE_FULL_ASSERT

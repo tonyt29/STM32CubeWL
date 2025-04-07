@@ -1,5 +1,5 @@
 Drivers/CMSIS/system_stm32wlxx.o: \
- C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/system_stm32wlxx.c \
+ C:/Users/campc/Documents/GitHub/STM32CubeWL/Projects/NUCLEO-WL55JC/Examples/SUBGHZ/SUBGHZ_Tx_Mode/Src/system_stm32wlxx.c \
  ../../../../../../../Drivers/CMSIS/Device/ST/STM32WLxx/Include/stm32wlxx.h \
  ../../../../../../../Drivers/CMSIS/Device/ST/STM32WLxx/Include/stm32wl55xx.h \
  ../../../../../../../Drivers/CMSIS/Include/core_cm4.h \

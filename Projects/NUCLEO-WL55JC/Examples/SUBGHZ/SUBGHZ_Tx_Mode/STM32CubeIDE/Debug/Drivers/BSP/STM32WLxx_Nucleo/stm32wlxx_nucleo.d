@@ -1,7 +1,7 @@
 Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.o: \
- C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.c \
- C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.h \
- C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo_errno.h \
+ C:/Users/campc/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.c \
+ C:/Users/campc/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.h \
+ C:/Users/campc/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo_errno.h \
  ../../Inc/stm32wlxx_nucleo_conf.h \
  ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_hal.h \
  ../../Inc/stm32wlxx_hal_conf.h \
@@ -36,8 +36,8 @@ Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.o: \
  ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_hal_subghz.h \
  ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_ll_spi.h \
  ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_ll_system.h
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.h:
-C:/Users/ttruong32/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo_errno.h:
+C:/Users/campc/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo.h:
+C:/Users/campc/Documents/GitHub/STM32CubeWL/Drivers/BSP/STM32WLxx_Nucleo/stm32wlxx_nucleo_errno.h:
 ../../Inc/stm32wlxx_nucleo_conf.h:
 ../../../../../../../Drivers/STM32WLxx_HAL_Driver/Inc/stm32wlxx_hal.h:
 ../../Inc/stm32wlxx_hal_conf.h:
