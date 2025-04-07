@@ -52,7 +52,7 @@ uint8_t RadioBufferAddr[2] = {0x80, 0x00};
 uint8_t RadioTxData[5] = {0x01, 0x02, 0x03, 0x04, 0x05};
 uint8_t RadioRxData[5];
 uint8_t RadioPacketType[1] = {0x01};
-uint8_t RadioPacketParams[9] = {0x00, 0x01, 0x00, 0x00, 0x00, 0x00, 0x04, 0x01, 0x00};
+uint8_t RadioPacketParams[6] = {0x00, 0x01, 0x00, 0x05, 0x00, 0x00};
 uint8_t RadioSyncr[3] = {0x07, 0x40, 0x01};
 uint8_t RadioFrequency[4] = {0x34, 0x03, 0x00, 0x9F};	// 915MHz
 uint8_t RadioPA[4] = {0x07, 0x00, 0x01, 0x01};
@@ -119,16 +119,6 @@ int main(void)
   /* USER CODE BEGIN 2 */
 
   /*## 1 - Wakeup the SUBGHZ Radio ###########################################*/
-  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_SLEEP, &RadioParam, 1) != HAL_OK)
-  {
-	  Error_Handler();
-  }
-
-  /* Set Standby Mode */
-  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_STANDBY, &RadioParam, 1) != HAL_OK)
-  {
-	  Error_Handler();
-  }
   /* Retrieve Status from SUBGHZ Radio */
   if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_STATUS, &RadioResult, 1) != HAL_OK)
     Error_Handler();
@@ -141,6 +131,9 @@ int main(void)
     if(RadioMode != RADIO_MODE_STANDBY_RC)
       Error_Handler();
   }
+
+  if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_PACKETTYPE, RadioGetData, 2) != HAL_OK)
+  	  Error_Handler();
 
   InitTx();
 
@@ -260,7 +253,7 @@ void InitTx(void)
   if (HAL_SUBGHZ_ExecGetCmd(&hsubghz, RADIO_GET_PACKETTYPE, RadioGetData, 2) != HAL_OK)
 	  Error_Handler();
   //Step 4
-  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_PACKETPARAMS, RadioPacketParams, 9) != HAL_OK)
+  if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, RADIO_SET_PACKETPARAMS, RadioPacketParams, 6) != HAL_OK)
 	  Error_Handler();
   //Step 5
   if (HAL_SUBGHZ_ExecSetCmd(&hsubghz, SUBGHZ_RADIO_WRITE_REGISTER, RadioSyncr, 3) != HAL_OK)
@@ -310,6 +303,9 @@ void InitTx(void)
 	{
 	  Error_Handler();
 	}
+
+  if (RadioStatus == RADIO_COMMAND_TX_DONE)
+	  printf("Data sent\n");
 
   //Step 12
   IRQStatus = 0x00;
